@@ -1,5 +1,7 @@
+import { ChangeEvent, useCallback, useState } from 'react';
 import './App.css';
-import { Folder } from './components/Folder/Folder';
+import { Folder } from './components/Folder';
+import { SearchField } from './components/SearchField';
 import { INode } from './types';
 
 // const data = [
@@ -29,6 +31,9 @@ data.forEach(element => {
 });
 
 const App = () => {
+  const [state, setState] = useState<string>('');
+  const [folder, setFolder] = useState<string>('');
+
   let result: INode[] = [];
   let level = { result };
 
@@ -46,11 +51,51 @@ const App = () => {
     }, level);
   });
 
+  const treeFilter = useCallback(
+    (array: INode[], find: string) => {
+      const getNodes = (result: any, object: any) => {
+        if (object.name.includes(find)) {
+          result.push(object);
+          return result;
+        }
+        if (Array.isArray(object.children)) {
+          const children = object.children.reduce(getNodes, []);
+          if (children.length) result.push({ ...object, children });
+        }
+        return result;
+      };
+
+      return array.reduce(getNodes, []);
+    },
+    [state]
+  );
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setState(event.target.value);
+  };
+
+  const handleOnClick = (name: string) => {
+    console.log(name);
+
+    setFolder(name);
+  };
+
   return (
     <div>
-      {result.map((item: INode, i: number) => {
-        return <Folder key={i} name={item.name} children={item.children} />;
-      })}
+      <SearchField value={state} onChange={handleChange} />
+      {treeFilter(result, state).length ? (
+        treeFilter(result, state).map((node: INode, i: number) => (
+          <Folder
+            onClick={() => handleOnClick(node.name)}
+            key={i}
+            name={node.name}
+            children={node.children}
+            border={node.name === folder}
+          />
+        ))
+      ) : (
+        <div className="status">{`No Items Matching: ${state}`}</div>
+      )}
     </div>
   );
 };

@@ -1,0 +1,16 @@
+.file {
+  cursor: pointer;
+}
+
+.file:focus {
+  transition: outline 100ms ease-in-out;
+  outline: 1px solid var(--blue);
+}
+
+.item-name {
+  margin: 0.5rem;
+  border: 1px solid white;
+  background: none;
+  border-radius: 5px;
+  padding: 0.2rem 0.3rem;
+}

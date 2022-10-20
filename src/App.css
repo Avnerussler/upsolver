@@ -1,0 +1,8 @@
+:root {
+  --gray: #80808021;
+  --blue: #0000ff63;
+}
+
+.status {
+  margin-top: 0.4rem;
+}

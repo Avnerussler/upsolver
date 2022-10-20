@@ -1,0 +1,5 @@
+.input-filter {
+  border: 2px solid var(--gray);
+  border-radius: 5px;
+  padding: 0.2rem 0.4rem;
+}
