@@ -10,7 +10,7 @@ export const Folder = ({
   border,
 }: {
   name: string;
-  children: any;
+  children: INode[];
   onClick: () => void;
   border: boolean;
 }) => {

@@ -40,7 +40,7 @@ const App = () => {
   helpArray.forEach(path => {
     path.split('.').reduce((r: any, name, i, a) => {
       name = name.replace('*', '.');
-      if (!r[name]) {
+      if (!r[name as string]) {
         r[name] = { result: [] };
         r.result.push({
           name,
@@ -53,13 +53,13 @@ const App = () => {
 
   const treeFilter = useCallback(
     (array: INode[], find: string) => {
-      const getNodes = (result: any, object: any) => {
+      const getNodes = (result: INode[], object: INode) => {
         if (object.name.includes(find)) {
-          result.push(object);
+          result.push(object as INode);
           return result;
         }
         if (Array.isArray(object.children)) {
-          const children = object.children.reduce(getNodes, []);
+          const children = object.children.reduce(getNodes, []) as [];
           if (children.length) result.push({ ...object, children });
         }
         return result;
@@ -75,8 +75,6 @@ const App = () => {
   };
 
   const handleOnClick = (name: string) => {
-    console.log(name);
-
     setFolder(name);
   };
 
