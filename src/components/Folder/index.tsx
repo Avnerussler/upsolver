@@ -1,19 +1,16 @@
-import { Fragment, useState } from 'react';
+import { FC, Fragment, useState } from 'react';
 import { INode } from '../../types';
 import { File } from '../File';
 import './style.css';
 
-export const Folder = ({
-  name,
-  children,
-  onClick,
-  border,
-}: {
+interface FolderProps {
   name: string;
   children: INode[];
   onClick: () => void;
   border: boolean;
-}) => {
+}
+
+export const Folder: FC<FolderProps> = ({ name, children, onClick, border }: FolderProps) => {
   const [expand, setExpand] = useState(false);
 
   return (
@@ -24,7 +21,9 @@ export const Folder = ({
             <div className="icon" onClick={() => setExpand(!expand)}>
               {expand ? '-' : '+'}
             </div>
-            <div className={`item-name ${border && 'folder-border'}`}>{name}</div>
+            <div onClick={onClick} className={`item-name ${border && 'folder-border'}`}>
+              {name}
+            </div>
           </>
         ) : (
           <File onClick={onClick} name={name} />

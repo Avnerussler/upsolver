@@ -1,7 +1,11 @@
 import './style.css';
 
-export const File = ({ name, onClick }: { name: string; onClick: () => void }) => (
-  <button className="file item-name" onClick={onClick}>
+interface FileProps {
+  name: string;
+  onClick: () => void;
+}
+export const File = ({ name, onClick }: FileProps) => (
+  <button onClick={onClick} className="file item-name">
     {name}
   </button>
 );
